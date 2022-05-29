@@ -1,27 +1,34 @@
-specVersion: 0.0.1
+specVersion: 0.0.4
 schema:
   file: ./schema.graphql
+description: TODO
+repository: TODO
 dataSources:
   - kind: ethereum
-    name: undefined
+    name: Contract
     network: matic
     source:
       address: "0xe88d1b1d08178d0d01228d766e6052eb2dd745c4"
       abi: Contract
+      startBlock: 23584410
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - ApprovalForAll
-        - NewTier
-        - OwnershipTransferred
-        - Paused
-        - TierExhausted
-        - TransferBatch
-        - TransferSingle
+        - Fan
+        - LDA
+        - Tier
+        # - ApprovalForAll
+        # - NewTier
+        - OwnershipTransfer
+        # - Paused
+        # - TierExhausted
+        - SingleTransfer
+        - BatchTransfer
         - URI
-        - Unpaused
+        # - Unpaused
+        - PauseStatus
       abis:
         - name: Contract
           file: ./abis/Contract.json
@@ -44,4 +51,4 @@ dataSources:
           handler: handleURI
         - event: Unpaused(address)
           handler: handleUnpaused
-      file: ./src/contract.ts
+      file: ./src/mapping.ts

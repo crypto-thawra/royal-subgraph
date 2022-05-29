@@ -1,6 +1,89 @@
-type ExampleEntity @entity {
+## TOP LEVEL ENTITIES ##
+type Fan @entity {
   id: ID!
-  count: BigInt!
-  account: Bytes! # address
-  operator: Bytes! # address
+  address: Bytes!
+  collectibles: [LDA!]
 }
+
+type LDA @entity {
+  id: ID!
+  tier: Tier!
+  tokenId: BigInt!
+}
+
+type Tier @entity {
+    id: ID!
+    tierId: BigInt!
+    tierExhausted: Boolean!
+}
+
+## TRANSFER AND APPROVALS ##
+# type ApprovalForAll @entity(immutable: true) {
+#   id: ID!
+#   approvingAccount: Bytes!
+#   operatingAccount: Bytes!
+#   approved: Boolean!
+# }
+
+type OwnershipTransfer @entity(immutable: true) {
+  id: ID!
+  previousOwner: Bytes!
+  newOwner: Bytes!
+}
+
+type SingleTransfer @entity(immutable: true) {
+  id: ID!
+  operator: Bytes!
+  from: Bytes!
+  to: Bytes!
+  tokenId: BigInt!
+  value: BigInt!
+}
+
+type BatchTransfer @entity(immutable: true) {
+  id: ID!
+  operator: Bytes!
+  from: Bytes!
+  to: Bytes!
+  tokenIds: [BigInt!]!
+  values: [BigInt!]!
+}
+
+type PauseStatus @entity {
+    id: ID!
+    account: Bytes!
+    paused: Boolean!
+}
+
+type URI @entity {
+    id: ID!
+    uri: String
+}
+## DEPRECATED -- pure event based entities. This is bad design ##
+# (https://thegraph.com/docs/en/developer/create-subgraph-hosted/)
+
+# type PausedEvent @entity {
+#   id: ID!
+#   pausingAccount: Bytes!
+# }
+# type UnpausedEvent @entity(immutable: true) {
+#   id: ID!
+#   unpausingAccount: Bytes!
+# }
+# type NewTierEvent @entity(immutable: true) {
+#   id: ID!
+#   tierId: BigInt!
+# }
+# type TierExhaustedEvent @entity(immutable: true) {
+#   id: ID!
+#   tierId: BigInt!
+# }
+
+# type TransferSingleEvent @entity(immutable: true) {
+#   id: ID!
+#   operator: Bytes!
+#   from: Bytes!
+#   to: Bytes!
+#   tokenId: BigInt!
+#   value: BigInt!
+# }
